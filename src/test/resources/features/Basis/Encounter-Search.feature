@@ -1,5 +1,5 @@
-@basis
-@mandatory
+@Basis
+@Mandatory
 @Encounter-Search
 Feature: Testen von Suchparametern gegen encounter-read-in-progress (@Encounter-Search)
 
@@ -145,28 +145,41 @@ Feature: Testen von Suchparametern gegen encounter-read-in-progress (@Encounter-
     And FHIR current response body evaluates the FHIRPath 'entry.resource.count() > 0' with error message 'Es wurden keine Suchergebnisse gefunden'
     And FHIR current response body evaluates the FHIRPath "entry.resource.select((period.start.exists() and period.start >  @2021-02-14T23:59:59+01:00) or (period.end.exists() and period.end < @2021-02-11T00:00:00+01:00)).allFalse()" with error message 'Es gibt Suchergebnisse, diese passen allerdings nicht vollständig zu den Suchkriterien.'
 
+# Achtung! Die Suchparameter date-start und end-date prüfen konkrete Datumsangaben aus period.start bzw. period.end und nicht Intervalinklusion bzw. Intervalüberschneidung wie das Suchparameter date. Beim Suchparameter date werden fehlende Startdatum- oder Enddatum-Angaben anders behandelt (https://hl7.org/fhir/R4/search.html#date und https://hl7.org/fhir/R5/encounter-search.html#Encounter-date-start)
   Scenario: Suche des Encounters anhand des Aufnahmedatums mit dem Suchparameter end-date
     Then Get FHIR resource at "http://fhirserver/Encounter/?end-date=le2050-01-01" with content type "xml"
     And FHIR current response body evaluates the FHIRPath 'entry.resource.count() > 0' with error message 'Es wurden keine Suchergebnisse gefunden'
-    And FHIR current response body evaluates the FHIRPath "entry.resource.all(period.start <= @2050-01-01T23:59:59+01:00 or period.start.empty())" with error message 'Es gibt Suchergebnisse, diese passen allerdings nicht vollständig zu den Suchkriterien.'
+    And FHIR current response body evaluates the FHIRPath "entry.resource.all(period.end <= @2050-01-01T23:59:59+01:00)" with error message 'Es gibt Suchergebnisse, diese passen allerdings nicht vollständig zu den Suchkriterien.'
+    # encounter-read-in-progress-id hat in Testdaten zwar das Startdatum 2021-02-12 aber kein Enddatum, darf daher im Suchergebnis nicht auftauchen
+    And bundle does not contain resource "Encounter" with ID "${data.encounter-read-in-progress-id}" with error message "Der gesuchte Encounter {data.encounter-read-in-progress-id} darf hier nicht zurückgegeben werden"
+    # encounter-read-finished-id hat in Testdaten das Startdatum 2021-02-12 und Enddatum 2021-02-13, muss daher im Bundle auftauchen
+    And response bundle contains resource with ID "${data.encounter-read-finished-id}" with error message "Der gesuchte Encounter {data.encounter-read-finished-id} ist nicht im Responsebundle enthalten"
 
   Scenario: Suche des Encounters anhand des Aufnahmedatums mit dem Suchparameter date-start
     Then Get FHIR resource at "http://fhirserver/Encounter/?date-start=ge1999-01-01" with content type "xml"
     And FHIR current response body evaluates the FHIRPath 'entry.resource.count() > 0' with error message 'Es wurden keine Suchergebnisse gefunden'
-    And FHIR current response body evaluates the FHIRPath "entry.resource.all(period.end >= @1999-01-01T00:00:59+01:00 or period.end.empty())" with error message 'Es gibt Suchergebnisse, diese passen allerdings nicht vollständig zu den Suchkriterien.'
+    And FHIR current response body evaluates the FHIRPath "entry.resource.all(period.start >= @1999-01-01T00:00:00+01:00)" with error message 'Es gibt Suchergebnisse, diese passen allerdings nicht vollständig zu den Suchkriterien.'
+    # encounter-read-in-progress-id hat in Testdaten das Startdatum 2021-02-12 und muss daher im Bundle auftauchen
+    And response bundle contains resource with ID "${data.encounter-read-in-progress-id}" with error message "Der gesuchte Encounter {data.encounter-read-in-progress-id} ist nicht im Responsebundle enthalten"
 
   Scenario: Negativsuche des Encounters anhand des Suchparameters date-start
     Then Get FHIR resource at "http://fhirserver/Encounter/?date-start=ge2021-02-14" with content type "xml"
+    # encounter-read-in-progress-id hat in Testdaten das Startdatum 2021-02-12, darf daher im Suchergebnis nicht auftauchen
     And bundle does not contain resource "Encounter" with ID "${data.encounter-read-in-progress-id}" with error message "Der gesuchte Encounter ${data.encounter-read-in-progress-id} darf hier nicht zurückgegeben werden"
 
   Scenario: Negativsuche des Encounters anhand des Suchparameters end-date
     Then Get FHIR resource at "http://fhirserver/Encounter/?end-date=le2021-02-11" with content type "xml"
-    And bundle does not contain resource "Encounter" with ID "${data.encounter-read-in-progress-id}" with error message "Der gesuchte Encounter ${data.encounter-read-in-progress-id} darf hier nicht zurückgegeben werden"
+    # encounter-read-finished-id hat in Testdaten das Enddatum 2021-02-13, darf daher im Suchergebnis nicht auftauchen
+    And bundle does not contain resource "Encounter" with ID "${data.encounter-read-finished-id}" with error message "Der gesuchte Encounter ${data.encounter-read-finished-id} darf hier nicht zurückgegeben werden"
 
-  Scenario: Suche des Encounters anhand des Aufnahmedatums mit mit dem Suchparameter end-date
+  Scenario: Suche des Encounters anhand des Aufnahmedatums mit bden beiden Suchparametern date-start und end-date
     Then Get FHIR resource at "http://fhirserver/Encounter/?date-start=ge2021-02-11&end-date=le2021-02-14" with content type "xml"
     And FHIR current response body evaluates the FHIRPath 'entry.resource.count() > 0' with error message 'Es wurden keine Suchergebnisse gefunden'
-    And FHIR current response body evaluates the FHIRPath "entry.resource.select((period.start.exists() and period.start > @2021-02-14T00:00:00+01:00) or (period.end.exists() and period.end < @2021-02-11T23:59:59+01:00)).allFalse()" with error message 'Es gibt Suchergebnisse, diese passen allerdings nicht vollständig zu den Suchkriterien.'
+    And FHIR current response body evaluates the FHIRPath "entry.resource.all(period.start > @2021-02-11T00:00:00+01:00 and period.end < @2021-02-14T23:59:59+01:00).allTrue()" with error message 'Es gibt Suchergebnisse, diese passen allerdings nicht vollständig zu den Suchkriterien.'
+    # encounter-read-in-progress-id hat in Testdaten das Startdatum 2021-02-12, darf daher im Suchergebnis nicht auftauchen
+    And bundle does not contain resource "Encounter" with ID "${data.encounter-read-in-progress-id}" with error message "Der gesuchte Encounter ${data.encounter-read-in-progress-id} darf hier nicht zurückgegeben werden"
+    # encounter-read-finished-id hat in Testdaten das Startdatum 2021-02-12 und Enddatum 2021-02-13, muss daher im Bundle auftauchen
+    And response bundle contains resource with ID "${data.encounter-read-finished-id}" with error message "Der gesuchte Encounter {data.encounter-read-finished-id} ist nicht im Responsebundle enthalten"
 
   Scenario: Suche des Encounters anhand der Aufnahmenummer
     Then Get FHIR resource at "http://fhirserver/Encounter/?identifier=${data.encounter-read-in-progress-identifier-system}%7C${data.encounter-read-in-progress-identifier-value}" with content type "xml"

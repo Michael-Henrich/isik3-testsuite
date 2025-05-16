@@ -1,5 +1,5 @@
-@basis
-@mandatory
+@Basis
+@Mandatory
 @Coverage-Read-Private
 Feature: Lesen der Ressource Coverage (@Coverage-Read-Private)
 

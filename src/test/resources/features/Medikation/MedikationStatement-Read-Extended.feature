@@ -1,5 +1,5 @@
-@medikation
-@mandatory
+@Medikation
+@Mandatory
 @MedicationStatement-Read-Extended
 Feature: Lesen der Ressource MedicationStatement (Extended) (@MedicationStatement-Read-Extended)
 

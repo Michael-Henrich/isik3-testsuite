@@ -1,5 +1,5 @@
-@terminplanung
-@mandatory
+@Terminplanung
+@Mandatory
 @Appointment-Book
 Feature: Buchung eines Termins (@Appointment-Book)
 
@@ -8,7 +8,7 @@ Feature: Buchung eines Termins (@Appointment-Book)
     Given Testbeschreibung: "Das zu testende System MUSS Buchung von Terminen unterstützen."
     Given Mit den Vorbedingungen:
     """
-      - Ein freier Terminblock mit Startzeit 1.9.2024 09:00 und Endzeit 1.9.2024 20:00 muss zuvor manuell im System im beliebigen Kalender angelegt worden sein (bitte die Terminblock-ID in der Konfigurationsvariable 'appointment-book-slot-id' hinterlegt)
+      - Ein freier Terminblock mit Startzeit 1.1.2026 09:00 und Endzeit 1.1.2026 20:00 muss zuvor manuell im System im beliebigen Kalender angelegt worden sein (bitte die Terminblock-ID in der Konfigurationsvariable 'appointment-book-slot-id' hinterlegt)
       - Servicetyp: beliebig (bitte in den Konfigurationsvariablen 'appointment-book-servicetype-system' und 'appointment-book-servicetype-code' hinterlegen)
     """
 

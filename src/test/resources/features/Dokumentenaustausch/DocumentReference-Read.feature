@@ -1,5 +1,5 @@
-@dokumentenaustausch
-@mandatory
+@Dokumentenaustausch
+@Mandatory
 @DocumentReference-Read
 Feature: Lesen der Ressource DocumentReference (@DocumentReference-Read)
 
@@ -24,7 +24,7 @@ Feature: Lesen der Ressource DocumentReference (@DocumentReference-Read)
       Beziehung zu anderen Dokumenten: Dieses Dokument ersetzt ein (beliebiges) Dokument
       Beschreibung: Molekularpathologiebefund vom 31.12.21
       Vertraulichkeit: Normal
-      Inhalt: Deutschsprachige PDF, erstellt 2020-12-31T23:50:50
+      Inhalt: Deutschsprachige PDF, erstellt 2020-12-31T23:50:50+01:00
       Kontext: Pathologiebesuch im Krankenhaus
       Kontakt/Fall: Beliebig (die verknüpfte Encounter-Ressource muss konform zu ISIKKontaktGesundheitseinrichtung sein, , die ID der korrespondierenden FHIR-Ressource zu diesem Testdatensatz muss in der Konfigurationsvariable 'documentreference-read-encounter-id' hinterlegt sein)
     """
@@ -49,7 +49,7 @@ Feature: Lesen der Ressource DocumentReference (@DocumentReference-Read)
     And FHIR current response body evaluates the FHIRPath "author.display.contains('Maxine Mustermann')" with error message 'Die Autorin des Dokumentes entspricht nicht dem Erwartungswert'
     And FHIR current response body evaluates the FHIRPath "relatesTo.where(code = 'replaces' and target.reference.exists()).exists()" with error message 'Die Information über die Beziehung zum zu ersetzenden Dokument entspricht nicht dem Erwartungswert'
     And FHIR current response body evaluates the FHIRPath "securityLabel.coding.where(code = 'N' and system = 'http://terminology.hl7.org/CodeSystem/v3-Confidentiality').exists()" with error message 'Die Vertraulichkeit entspricht nicht dem Erwartungswert'
-    And FHIR current response body evaluates the FHIRPath "content.where(attachment.where(contentType = 'application/pdf' and language = 'de' and url.exists() and creation.toString().contains('2020-12-31T23:50:50')).exists() and format.where(code = 'urn:ihe:iti:xds:2017:mimeTypeSufficient' and system = 'http://ihe.net/fhir/ihe.formatcode.fhir/CodeSystem/formatcode').exists()).exists()" with error message 'Der Anhang entspricht nicht dem Erwartungswert'
+    And FHIR current response body evaluates the FHIRPath "content.where(attachment.where(contentType = 'application/pdf' and (language = 'de' or language.startsWith('de-')) and url.exists() and creation = @2020-12-31T23:50:50+01:00).exists() and format.where(code = 'urn:ihe:iti:xds:2017:mimeTypeSufficient' and system = 'http://ihe.net/fhir/ihe.formatcode.fhir/CodeSystem/formatcode').exists()).exists()" with error message 'Der Anhang entspricht nicht dem Erwartungswert'
     And FHIR current response body evaluates the FHIRPath "context.where(facilityType.coding.where(code = 'KHS' and system = 'http://ihe-d.de/CodeSystems/PatientBezogenenGesundheitsversorgung').exists() and practiceSetting.where(coding.where(code = 'PATH' and system = 'http://ihe-d.de/CodeSystems/AerztlicheFachrichtungen').exists()).exists()).exists()" with error message 'Der Kontext entspricht nicht dem Erwartungswert'
     And FHIR current response body evaluates the FHIRPath "category.coding.where(code = 'BEF' and system = 'http://ihe-d.de/CodeSystems/IHEXDSclassCode' and display = 'Befundbericht').exists()" with error message 'Die Dokumentklasse entspricht nicht dem Erwartungswert'
     

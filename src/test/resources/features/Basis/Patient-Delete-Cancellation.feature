@@ -1,5 +1,5 @@
-@basis
-@optional
+@Basis
+@Optional
 @Patient-Delete-Cancellation
 Feature: Delete Patient (@Patient-Delete-Cancellation)
 

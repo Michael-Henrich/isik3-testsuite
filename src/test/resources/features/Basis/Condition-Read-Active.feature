@@ -1,5 +1,5 @@
-@basis
-@mandatory
+@Basis
+@Mandatory
 @Condition-Read-Active
 Feature: Lesen der Ressource Condition (@Condition-Read-Active)
 

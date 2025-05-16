@@ -1,5 +1,5 @@
-@terminplanung
-@optional
+@Terminplanung
+@Optional
 @Encounter-Search-Appointment
 Feature: Testen von Suchparametern gegen Encounter-Read-Appointment (@Encounter-Search-Appointment)
 

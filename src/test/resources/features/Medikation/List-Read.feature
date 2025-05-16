@@ -1,5 +1,5 @@
-@medikation
-@mandatory
+@Medikation
+@Mandatory
 @List-Read
 Feature: Lesen der Ressource List (@List-Read)
 

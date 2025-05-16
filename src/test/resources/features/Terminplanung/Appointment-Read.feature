@@ -1,5 +1,5 @@
-@terminplanung
-@mandatory
+@Terminplanung
+@Mandatory
 @Appointment-Read
 Feature: Lesen der Ressource Appointment (@Appointment-Read)
 
@@ -40,7 +40,7 @@ Feature: Lesen der Ressource Appointment (@Appointment-Read)
     And TGR current response with attribute "$..Appointment.status.value" matches "cancelled"
     And FHIR current response body evaluates the FHIRPath "cancelationReason.coding.where(code = 'pat').exists()" with error message 'Der Stornierungsgrund entspricht nicht dem Erwartungswert'
     And FHIR current response body evaluates the FHIRPath "serviceType.coding.where(code='${data.schedule-read-servicetype-code}' and system = '${data.schedule-read-servicetype-system}').exists()" with error message 'Der Service-Typ des Termins entspricht nicht dem Erwartungswert'
-    And FHIR current response body evaluates the FHIRPath "specialty.coding.where(code = '142' and system ='urn:oid:1.2.276.0.76.5.114').exists()" with error message 'Die Fachrichtung entspricht nicht dem Erwartungswert'
+    And FHIR current response body evaluates the FHIRPath "specialty.coding.where((code = '142' and system ='urn:oid:1.2.276.0.76.5.114' ) or (code = 'NEUR' and system ='http://ihe-d.de/CodeSystems/AerztlicheFachrichtungen' )).exists()" with error message 'Die Fachrichtung entspricht nicht dem Erwartungswert'
     And FHIR current response body evaluates the FHIRPath "priority.extension.where(url = 'https://gematik.de/fhir/isik/v3/Terminplanung/StructureDefinition/ISiKTerminPriorityExtension' and value.coding.where(code = '394848005' and system = 'http://snomed.info/sct').exists()).exists()" with error message 'Die Priorität entspricht nicht dem Erwartungswert'
     # The OR expression enables configuration of both full and partial date time values with different precision, e.g. slot-read-start: 2024-01-01, 2024-01-01T13:00:00, 2024-01-01T13:00:00.000, 2024-01-01T13:00:00+01:00
     And FHIR current response body evaluates the FHIRPath "start.toString().contains('${data.slot-read-start}') or start ~ @${data.slot-read-start}" with error message 'Der Startzeitpunkt entspricht nicht dem Erwartungswert'

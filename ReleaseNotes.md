@@ -2,6 +2,16 @@
 
 # Release Notes ISiK Stufe 3 Test Suite
 
+## Release 1.2.0 (2025-05-06)
+
+### added
+- Possibility to provide HTTP Basic credentials or a Bearer token (cf. [README.md](./README.md#test-environment)) 
+- docker image for the testsuite
+
+### changed
+- Syncronized test cases with [TITUS Release 3.6.3](https://wiki.gematik.de/spaces/EPA/pages/459883044/ISiK+Testmodul+in+Titus+-+Release+Notes)
+
+
 ## Release 1.1.0 (2024-08-30)
 
 (sync with TITUS test cases v3.4.0)

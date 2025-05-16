@@ -1,5 +1,5 @@
-@basis
-@mandatory
+@Basis
+@Mandatory
 @RelatedPerson-Search
 Feature: Testen von Suchparametern gegen relatedperson-read (@RelatedPerson-Search)
 

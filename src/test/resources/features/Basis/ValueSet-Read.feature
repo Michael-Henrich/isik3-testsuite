@@ -1,5 +1,5 @@
-@basis
-@mandatory
+@Basis
+@Mandatory
 @ValueSet-Read
 Feature: Lesen der Ressource ValueSet (ValueSet-Read)
 
@@ -24,7 +24,7 @@ Feature: Lesen der Ressource ValueSet (ValueSet-Read)
 
   Scenario: Read eines ValueSet anhand der ID
     Then Get FHIR resource at "http://fhirserver/ValueSet/${data.valueset-read-id}" with content type "xml"
-    Then TGR find last request to path "/ValueSet/${data.valueset-read-id}"
+    Then TGR find the last request
     Then TGR current response with attribute "$.responseCode" matches "200"
     And TGR current response with attribute "$.header.Content-Type" matches "application/fhir+xml;charset=UTF-8"
     And resource has ID "${data.valueset-read-id}"

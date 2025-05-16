@@ -1,6 +1,11 @@
 {
   "resourceType": "Bundle",
   "id": "CorrectCompositionBundle",
+  "meta": {
+    "profile": [
+      "https://gematik.de/fhir/isik/v3/Basismodul/StructureDefinition/ISiKBerichtBundle"
+    ]
+  },
   "entry": [
     {
       "resource": {
@@ -13,14 +18,14 @@
         },
         "text": {
           "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>Consultation note for Henry Levin the 7th</p><p>Managed by Good Health Clinic</p></div>",
-          "status": "generated"
+          "status": "extensions"
         },
         "section": [
           {
             "title": "History of present illness",
             "text": {
               "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><table><tr><td><b>Code</b></td><td><b>Date</b></td><td><b>Type</b></td><td><b>BodySite</b></td><td><b>Severity</b></td></tr><tr><td>Stroke</td><td>2010-07-18</td><td>Diagnosis</td><td/><td/></tr><tr><td>Burnt Ear</td><td>2012-05-24</td><td>Diagnosis</td><td>Left Ear</td><td/></tr><tr><td>Asthma</td><td>2012-11-12</td><td>Finding</td><td/><td>Mild</td></tr></table></div>",
-              "status": "generated"
+              "status": "extensions"
             }
           }
         ],
@@ -33,16 +38,6 @@
             }
           ]
         },
-        "category": [
-          {
-            "coding": [
-              {
-                "code": "11488-4",
-                "system": "http://loinc.org"
-              }
-            ]
-          }
-        ],
         "encounter": {
           "reference": "urn:uuid:e25e3869-a517-425b-acfc-19e6f4ee17a8"
         },

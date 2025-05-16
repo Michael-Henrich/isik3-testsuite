@@ -1,5 +1,5 @@
-@medikation
-@mandatory
+@Medikation
+@Mandatory
 @List-Update
 Feature: Update Medikationsliste (@List-Update)
 

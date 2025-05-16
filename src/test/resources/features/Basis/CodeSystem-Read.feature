@@ -1,5 +1,5 @@
-@basis
-@optional
+@Basis
+@Optional
 @CodeSystem-Read
 Feature: Lesen der Ressource CodeSystem (@CodeSystem-Read)
 

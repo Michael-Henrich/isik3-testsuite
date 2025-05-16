@@ -1,5 +1,5 @@
-@medikation
-@mandatory
+@Medikation
+@Mandatory
 @MedicationRequest-Update
 Feature: Update einer Medikationsverordnung (@MedicationRequest-Update)
 
@@ -23,6 +23,5 @@ Feature: Update einer Medikationsverordnung (@MedicationRequest-Update)
     And TGR send empty GET request to "http://fhirserver/MedicationRequest/${data.medicationrequest-update-id}"
     And TGR find the last request
     And TGR current response with attribute "$.body.note.0.text.content" matches "Aktualisierte Testnotiz"
-    And FHIR current response body evaluates the FHIRPath "dosageInstruction.all(text = 'Aktualisierte Dosierungsangabe')" with error message 'Die Freitext-Dosierungsanweisungen entsprechen nicht dem Erwartungswert'
-    And FHIR current response body evaluates the FHIRPath "dispenseRequest.quantity.value = 10" with error message 'Angeforderte Abgabemenge entspricht nicht dem Erwartungswert'
+    And FHIR current response body evaluates the FHIRPath "dispenseRequest.quantity.value ~ 10" with error message 'Die Abgabemenge wurde nicht oder nicht richtig aktualisiert'
     And FHIR current response body evaluates the FHIRPath "substitution.allowed = false" with error message 'Ersatz zulässig entspricht nicht dem Erwartungswert'

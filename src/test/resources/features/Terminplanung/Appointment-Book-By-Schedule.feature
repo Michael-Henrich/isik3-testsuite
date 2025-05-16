@@ -1,5 +1,5 @@
-@terminplanung
-@mandatory
+@Terminplanung
+@Mandatory
 @Appointment-Book-By-Schedule
 Feature: Buchung eines Termins anhand der Kalender-Referenz (@Appointment-Book-By-Schedule)
 
@@ -9,7 +9,7 @@ Feature: Buchung eines Termins anhand der Kalender-Referenz (@Appointment-Book-B
     Given Mit den Vorbedingungen:
     """
       - Der Testfall Schedule-Read muss zuvor erfolgreich ausgeführt worden sein.
-      - Ein freier Terminblock mit Startzeit 1.9.2024 09:00 und Endzeit 1.9.2024 20:00 muss zuvor manuell im Kalender aus dem Testfall Schedule-Read angelegt worden sein
+      - Ein freier Terminblock mit Startzeit 1.1.2026 09:00 und Endzeit 1.1.2026 20:00 muss zuvor manuell im Kalender aus dem Testfall Schedule-Read angelegt worden sein
       - Behandlungstyp: der Behandlungstyp aus dem Testfall Schedule-Read
     """
 

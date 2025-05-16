@@ -1,5 +1,5 @@
-@basis
-@mandatory
+@Basis
+@Mandatory
 @Coverage-Search-Private
 Feature: Testen von Suchparametern gegen coverage-read-private (@Coverage-Search-Private)
 

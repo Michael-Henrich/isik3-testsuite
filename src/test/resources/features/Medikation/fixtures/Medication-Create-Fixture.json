@@ -9,13 +9,15 @@
   "amount": {
     "numerator": {
       "system": "http://unitsofmeasure.org",
-      "value": 600,
-      "code": "mg"
+      "value": 20,
+      "unit": "Brausetablette",
+      "code": "1"
     },
     "denominator": {
       "system": "http://unitsofmeasure.org",
       "value": 1,
-      "code": "{Tablette}"
+      "unit": "Brausetablette",
+      "code": "1"
     }
   },
   "code": {

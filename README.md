@@ -34,9 +34,6 @@ This is a test suite for conformance tests of the ISiK Stufe 3 specification mod
 - [Dokumentenaustausch](https://simplifier.net/guide/isik-dokumentenaustausch-v3?version=current)
 - [Vitalparameter und Körpermaße](https://simplifier.net/guide/isik-vitalparamater-v3?version=current)
 
-> **Warning**
-> The test suite consists of the same test cases as the [Titus platform](https://fachportal.gematik.de/toolkit/titus-ps-testmodule) but is currently under evaluation. You can not pass the [conformity assessment](https://fachportal.gematik.de/gematik-onlineshop/bestaetigungsverfahren-isik-isip) with this test suite yet. Please follow the instruction on the above page to get access to the Titus platform. 
-
 ### Release Notes
 See [ReleaseNotes.md](./ReleaseNotes.md) for all information regarding the (newest) releases.
 
@@ -58,11 +55,14 @@ Configure the endpoint of the SUT using the configuration element `servers.fhirs
 
 ```yaml
 servers:
+#...   
   fhirserver:
     type: externalUrl
     source:
       - http://localhost:9032
 ```
+
+See examples for different configuration options in the [tiger.yaml](./tiger.yaml) or check the official [Tiger documentation](https://gematik.github.io/app-Tiger/Tiger-User-Manual.html) 
 
 #### Test resources
 
@@ -80,69 +80,73 @@ patient-read-id: Patient-Read-Example
 
 ## Usage
 
-### Starting all test cases from one or multiple modules
+### Using Maven
 
-To start all test cases from a module, run `mvn verify -P MODULENAME`, e.g. `mvn verify -P basis`. To start only mandatory or optional test cases, use the corresponding profiles `mandatory` or `optional`.
+Edit the file `.env` to select the test cases you want to run (see [.env](./env) for examples). The default value is all tests from the ISIK basis module. 
 
-Examples:
+Afterward call Maven to execute the tests:
 
 ```shell
-`mvn -P basis,mandatory`
-`mvn -P basis,optional`
+mvn clean verify
 ```
 
-Available module names:
-- `basis`
-- `dokumentenaustausch`
-- `medikation`
-- `terminplanung`
-- `vitalparameter`
+#### Proxy settings
 
-Test cases of several modules can be executed in one run by providing a comma-separated list of module names, e.g. `mvn verify -P basis,medikation`.
+If using the tiger testsuite behind a proxy provide the proxy configuration at the following places:
+1. Maven configuration ([official documentation](https://maven.apache.org/guides/mini/guide-proxies.html).
+2. `tiger.yaml` (`forwardToProxy` configuration block)
 
-### Starting single test cases
+### Using Docker
 
-To start one or several particular test cases run `mvn verify -Dcucumber.filter.tags="@TEST_NAME1 or @TEST_NAME2"`, e.g. `mvn verify -Dcucumber.filter.tags="@Patient-Read or @Patient-Search"`. To start the complete test suite run `mvn verify`.
+The testsuite is also distributed as a [docker image](https://hub.docker.com/r/gematik1/isik3-testsuite). Make sure, the docker environment has a connection to the SUT (configure [docker proxy settings](https://docs.docker.com/engine/cli/proxy/) if needed). 
 
-### Inspecting test results
+To use the image, download and adjust the following files according to your test environment:
+* `tiger.yaml` (configuration of the test environment and test framework)
+* `dc-testsuite.yml` (configuration of the docker container)
+* `.env` (configuration of the test suite)
+* `testdata/*.yaml` (configuration of test data per module)
 
-Right after starting a test suite a browser window will open, which provides an overview of the testing progress. See [Tiger Workflow UI](https://gematik.github.io/app-Tiger/Tiger-User-Manual.html#_tiger_user_interfaces) for further information about the user interface. To run the test suite without the GUI, e.g. within a CI/CD pipeline, set the configuration element `lib.activateWorkflowUi` to `false` in the `tiger.yaml` configuration file.
+Then start a docker container using docker-compose:
 
-The test suite produces a report, which can be found in `target/site/serenity/index.html` or as a compressed artifact in `target/tiger-integration-isik-stufe-3-VERSION-SNAPSHOT-report.zip`. 
+```shell
+docker compose -f dc-testsuite.yml up
+```
+
+## Inspecting test results
+
+Right after starting a test suite a browser window will open, which provides an overview of the testing progress. If using Tiger in Docker, please navigate to http://localhost:9010 manually. See [Tiger Workflow UI](https://gematik.github.io/app-Tiger/Tiger-User-Manual.html#_tiger_user_interfaces) for further information about the user interface. To run the test suite without the GUI, e.g. within a CI/CD pipeline, set the configuration element `lib.activateWorkflowUi` to `false` in the `tiger.yaml` configuration file.
+
+After the test suite finishes the archived test results can be found in `tiger-integration-isik-stufe-3-VERSION-debug-report.zip` file (take notice of the `debug-report` suffix) or `target/site/serenity/index.html` in case of a Maven run.
 
 > **Warning**
-> Please always attach the ZIP test report to the issue in the [Anfrageportal ISiK](#contact) when reporting a bug.
- 
+> Each test run deletes the reports of the previous run. Backup the created reports if you need them in the future.
 
-> **Warning** 
-> The `mvn` command deletes the `target` folder. Backup the created reports if you need them in the future.
+## Submitting test results as part of the ISiK certification process
+The artifact  `target/tiger-integration-isik-stufe-3-VERSION-test-report.zip` is required to apply for the [ISiK conformance certificate](https://fachportal.gematik.de/informationen-fuer/isik/bestaetigungsverfahren-isik) (take notice of the `test-report` suffix). Please [get an account](https://fachportal.gematik.de/gematik-onlineshop/titus?ai%5Baction%5D=detail&ai%5Bcontroller%5D=Catalog&ai%5Bd_name%5D=111&ai%5Bd_pos%5D=2) to the TITUS platform and upload the report into the corresponding submission form.
 
-### Proxy settings
-
-To access an endpoint behind a proxy, you can set the proxy settings in the Maven command line. 
-
-Example:
-
-```shell
-mvn -Dhttps.proxyHost=....... -Dhttps.proxyPort=..... -P basis
-```
+> **Warning**
+> Each test run deletes the reports of the previous run. Backup the created reports if you need them in the future.
 
 ## Contributing
 If you want to contribute, please check our [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 ## License
 
-Copyright 2024 gematik GmbH
+Copyright 2025 gematik GmbH
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
 
 See the [LICENSE](./LICENSE) for the specific language governing permissions and limitations under the License.
 
-Unless required by applicable law the software is provided "as is" without warranty of any kind, either express or implied, including, but not limited to, the warranties of fitness for a particular purpose, merchantability, and/or non-infringement. The authors or copyright holders shall not be liable in any manner whatsoever for any damages or other claims arising from, out of or in connection with the software or the use or other dealings with the software, whether in an action of contract, tort, or otherwise.
+## Additional Notes and Disclaimer from gematik GmbH
 
-The software is the result of research and development activities, therefore not necessarily quality assured and without the character of a liable product. For this reason, gematik does not provide any support or other user assistance (unless otherwise stated in individual cases and without justification of a legal obligation). Furthermore, there is no claim to further development and adaptation of the results to a more current state of the art.
-
-Gematik may remove published results temporarily or permanently from the place of publication at any time without prior notice or justification.
+1. Copyright notice: Each published work result is accompanied by an explicit statement of the license conditions for use. These are regularly typical conditions in connection with open source or free software. Programs described/provided/linked here are free software, unless otherwise stated.
+2. Permission notice: Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions::
+    1. The copyright notice (Item 1) and the permission notice (Item 2) shall be included in all copies or substantial portions of the Software.
+    2. The software is provided "as is" without warranty of any kind, either express or implied, including, but not limited to, the warranties of fitness for a particular purpose, merchantability, and/or non-infringement. The authors or copyright holders shall not be liable in any manner whatsoever for any damages or other claims arising from, out of or in connection with the software or the use or other dealings with the software, whether in an action of contract, tort, or otherwise.
+    3. The software is the result of research and development activities, therefore not necessarily quality assured and without the character of a liable product. For this reason, gematik does not provide any support or other user assistance (unless otherwise stated in individual cases and without justification of a legal obligation). Furthermore, there is no claim to further development and adaptation of the results to a more current state of the art.
+3. Gematik may remove published results temporarily or permanently from the place of publication at any time without prior notice or justification.
+4. Please note: Parts of this code may have been generated using AI-supported technology.’ Please take this into account, especially when troubleshooting, for security analyses and possible adjustments.
 
 ## Contact
 

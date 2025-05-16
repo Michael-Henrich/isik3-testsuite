@@ -1,6 +1,6 @@
-@dokumentenaustausch
-@terminplanung
-@mandatory
+@Dokumentenaustausch
+@Terminplanung
+@Mandatory
 @Binary-Read
 Feature: Lesen der Ressource Binary (@Binary-Read)
 

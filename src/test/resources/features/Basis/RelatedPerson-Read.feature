@@ -1,5 +1,5 @@
-@basis
-@mandatory
+@Basis
+@Mandatory
 @RelatedPerson-Read
 Feature: Lesen der Ressource RelatedPerson (@RelatedPerson-Read)
 

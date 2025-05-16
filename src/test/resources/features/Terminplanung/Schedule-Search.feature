@@ -1,5 +1,5 @@
-@terminplanung
-@mandatory
+@Terminplanung
+@Mandatory
 @Schedule-Search
 Feature: Testen von Suchparametern gegen die Schedule Ressource (@Schedule-Search)
 
@@ -39,20 +39,20 @@ Feature: Testen von Suchparametern gegen die Schedule Ressource (@Schedule-Searc
 
   Scenario: Suche nach dem Schedule anhand des Status
     Then Get FHIR resource at "http://fhirserver/Schedule/?active=true" with content type "json"
-    And FHIR current response body evaluates the FHIRPath 'entry.resource.count() > 0' with error message 'Es wurden keine Suchergebnisse gefunden'
-    And FHIR current response body evaluates the FHIRPath "entry.resource.all(active = 'true')" with error message 'Es gibt Suchergebnisse, diese passen allerdings nicht vollständig zu den Suchkriterien.'
+    And FHIR current response body evaluates the FHIRPath 'entry.resource.ofType(Schedule).count() > 0' with error message 'Es wurden keine Suchergebnisse gefunden'
+    And FHIR current response body evaluates the FHIRPath "entry.resource.ofType(Schedule).all(active = 'true')" with error message 'Es gibt Suchergebnisse, diese passen allerdings nicht vollständig zu den Suchkriterien.'
 
   Scenario: Suche nach dem Schedule anhand des Behandlungstyp
     Then Get FHIR resource at "http://fhirserver/Schedule/?service-type=${data.schedule-read-servicetype-code}" with content type "json"
-    And FHIR current response body evaluates the FHIRPath 'entry.resource.count() > 0' with error message 'Es wurden keine Suchergebnisse gefunden'
-    And FHIR current response body evaluates the FHIRPath "entry.resource.all(serviceType.coding.where(code='${data.schedule-read-servicetype-code}').exists())" with error message 'Es gibt Suchergebnisse, diese passen allerdings nicht vollständig zu den Suchkriterien.'
+    And FHIR current response body evaluates the FHIRPath 'entry.resource.ofType(Schedule).count() > 0' with error message 'Es wurden keine Suchergebnisse gefunden'
+    And FHIR current response body evaluates the FHIRPath "entry.resource.ofType(Schedule).all(serviceType.coding.where(code='${data.schedule-read-servicetype-code}').exists())" with error message 'Es gibt Suchergebnisse, diese passen allerdings nicht vollständig zu den Suchkriterien.'
 
   Scenario: Suche nach dem Schedule anhand der Fachrichtung
-    Then Get FHIR resource at "http://fhirserver/Schedule/?specialty=142" with content type "json"
-    And FHIR current response body evaluates the FHIRPath 'entry.resource.count() > 0' with error message 'Es wurden keine Suchergebnisse gefunden'
-    And FHIR current response body evaluates the FHIRPath "entry.resource.all(specialty.coding.where(code='142' and system ='urn:oid:1.2.276.0.76.5.114').exists())" with error message 'Es gibt Suchergebnisse, diese passen allerdings nicht vollständig zu den Suchkriterien.'
+    Then Get FHIR resource at "http://fhirserver/Schedule/?specialty=urn%3Aoid%3A1.2.276.0.76.5.114%7C142%2Chttp%3A%2F%2Fihe-d.de%2FCodeSystems%2FAerztlicheFachrichtungen%7CNEUR" with content type "json"
+    And FHIR current response body evaluates the FHIRPath 'entry.resource.ofType(Schedule).count() > 0' with error message 'Es wurden keine Suchergebnisse gefunden'
+    And FHIR current response body evaluates the FHIRPath "entry.resource.ofType(Schedule).all(specialty.coding.where((code = '142' and system ='urn:oid:1.2.276.0.76.5.114') or (code = 'NEUR' and system ='http://ihe-d.de/CodeSystems/AerztlicheFachrichtungen')).exists())" with error message 'Es gibt Suchergebnisse, diese passen allerdings nicht vollständig zu den Suchkriterien.'
 
   Scenario: Suche nach dem Schedule anhand des Akteurs
     Then Get FHIR resource at "http://fhirserver/Schedule/?actor=Practitioner/${data.terminplanung-practitioner-id}" with content type "xml"
-    And FHIR current response body evaluates the FHIRPath 'entry.resource.count() > 0' with error message 'Es wurden keine Suchergebnisse gefunden'
-    And FHIR current response body evaluates the FHIRPath "entry.resource.all(actor.where(reference.replaceMatches('/_history/.+','').matches('\\b${data.terminplanung-practitioner-id}$') and display.exists()).exists())" with error message 'Es gibt Suchergebnisse, diese passen allerdings nicht vollständig zu den Suchkriterien.'
+    And FHIR current response body evaluates the FHIRPath 'entry.resource.ofType(Schedule).count() > 0' with error message 'Es wurden keine Suchergebnisse gefunden'
+    And FHIR current response body evaluates the FHIRPath "entry.resource.ofType(Schedule).all(actor.where(reference.replaceMatches('/_history/.+','').matches('\\b${data.terminplanung-practitioner-id}$') and display.exists()).exists())" with error message 'Es gibt Suchergebnisse, diese passen allerdings nicht vollständig zu den Suchkriterien.'

@@ -1,5 +1,5 @@
-@vitalparameter
-@mandatory
+@Vitalparameter
+@Mandatory
 @Observation-Search
 Feature: Testen von Suchparametern gegen observation-read-blutdruck (@Observation-Search)
 
@@ -63,12 +63,12 @@ Feature: Testen von Suchparametern gegen observation-read-blutdruck (@Observatio
     And FHIR current response body evaluates the FHIRPath 'entry.resource.count() > 0' with error message 'Es wurden keine Suchergebnisse gefunden'
     And FHIR current response body evaluates the FHIRPath "entry.resource.all(effective.exists())" with error message 'Es gibt Suchergebnisse, diese passen allerdings nicht vollständig zu den Suchkriterien.'
 
-  Scenario: Suche nach Observationen anhand der Referenz zur PatientIn
+  Scenario: Suche nach Observationen anhand der Referenz zur PatientIn (Suchparameter patient)
     Then Get FHIR resource at "http://fhirserver/Observation/?patient=Patient/${data.observation-read-patient-id}" with content type "json"
     And FHIR current response body evaluates the FHIRPath 'entry.resource.count() > 0' with error message 'Es wurden keine Suchergebnisse gefunden'
     And element "subject" in all bundle resources references resource with ID "Patient/${data.observation-read-patient-id}"
 
-  Scenario: Suche nach Observationen anhand der Referenz zur PatientIn
+  Scenario: Suche nach Observationen anhand der Referenz zur PatientIn (Suchparameter subject)
     Then Get FHIR resource at "http://fhirserver/Observation/?subject=Patient/${data.observation-read-patient-id}" with content type "xml"
     And FHIR current response body evaluates the FHIRPath 'entry.resource.count() > 0' with error message 'Es wurden keine Suchergebnisse gefunden'
     And element "subject" in all bundle resources references resource with ID "Patient/${data.observation-read-patient-id}"

@@ -1,5 +1,5 @@
-@terminplanung
-@mandatory
+@Terminplanung
+@Mandatory
 @Binary-Create
 Feature: POST Binary-Ressource (@Binary-Create)
 

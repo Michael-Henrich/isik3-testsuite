@@ -1,5 +1,5 @@
-@terminplanung
-@optional
+@Terminplanung
+@Optional
 @Communication-Search
 Feature: Testen von Suchparametern gegen die Communication Ressource (@Communication-Search)
 
@@ -39,8 +39,8 @@ Feature: Testen von Suchparametern gegen die Communication Ressource (@Communica
 
   Scenario Outline: Suche nach der Nachricht anhand der Referenzen
     Then Get FHIR resource at "http://fhirserver/Communication/?<searchParameter>=<searchUrl><searchValue>" with content type "<contentType>"
-    And FHIR current response body evaluates the FHIRPath 'entry.resource.count() > 0' with error message 'Es wurden keine Suchergebnisse gefunden'
-    And FHIR current response body evaluates the FHIRPath "entry.resource.all(<reference>.reference.replaceMatches('/_history/.+','').matches('\\b<searchValue>$'))" with error message 'Es gibt Suchergebnisse, diese passen allerdings nicht vollständig zu den Suchkriterien.'
+    And FHIR current response body evaluates the FHIRPath 'entry.resource.ofType(Communication).count() > 0' with error message 'Es wurden keine Suchergebnisse gefunden'
+    And FHIR current response body evaluates the FHIRPath "entry.resource.ofType(Communication).all(<reference>.reference.replaceMatches('/_history/.+','').matches('\\b<searchValue>$'))" with error message 'Es gibt Suchergebnisse, diese passen allerdings nicht vollständig zu den Suchkriterien.'
 
     Examples:
       | contentType | searchParameter | reference | searchUrl     | searchValue                  |

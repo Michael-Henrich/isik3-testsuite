@@ -1,5 +1,5 @@
-@basis
-@mandatory
+@Basis
+@Mandatory
 @Patient-Search
 Feature: Testen von Suchparametern gegen die Patienten Ressource (@Patient-Search)
 

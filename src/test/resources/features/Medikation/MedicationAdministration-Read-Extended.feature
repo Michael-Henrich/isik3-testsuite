@@ -1,5 +1,5 @@
-@medikation
-@mandatory
+@Medikation
+@Mandatory
 @MedicationAdministration-Read-Extended
 Feature: Lesen der Ressource MedicationAdministration (@MedicationAdministration-Read-Extended)
 
@@ -15,7 +15,7 @@ Feature: Lesen der Ressource MedicationAdministration (@MedicationAdministration
       Medikament (ATC kodiert mit Display Wert): Acetylcystein
       Patient: Beliebig (die verknüpfte Patient-Ressource muss konform zu ISiKPatient sein, bitte die ID in der Konfigurationsvariable 'medication-patient-id' hinterlegen)
       Patient Identifier: Identifier des verlinkten Patienten (bitte die ID in der Konfigurationsvariable 'medication-patient-identifier' hinterlegen, wird für Suchtests verwendet)
-      Zeitpunkt: 2021-07-01
+      Zeitpunkt der Verabreichung: 2021-07-01 (Uhrzeit beliebig)
       Verabreichende Person: Beliebig (die verknüpfte Practitioner-Ressource muss konform zu ISiKPersonImGesundheitsberuf sein, bitte die ID in der Konfigurationsvariable 'medication-practitioner-id' hinterlegen)
       Verabreichende Person Identifier: Identifier der verlinkten verabreichenden Person (bitte die ID in der Konfigurationsvariable 'medication-practitioner-identifier' hinterlegen, wird für Suchtests verwendet)
     """

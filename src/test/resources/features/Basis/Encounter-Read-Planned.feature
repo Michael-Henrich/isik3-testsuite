@@ -1,5 +1,5 @@
-@basis
-@mandatory
+@Basis
+@Mandatory
 @Encounter-Read-Planned
 Feature: Lesen der Ressource Encounter (@Encounter-Read-Planned)
 

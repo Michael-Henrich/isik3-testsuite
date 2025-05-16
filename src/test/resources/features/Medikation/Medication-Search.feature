@@ -1,5 +1,5 @@
-@medikation
-@mandatory
+@Medikation
+@Mandatory
 @Medication-Search
 Feature: Testen von Suchparametern gegen die Medication Ressource (@Medication-Search)
 
@@ -60,10 +60,11 @@ Feature: Testen von Suchparametern gegen die Medication Ressource (@Medication-S
     And FHIR current response body evaluates the FHIRPath 'entry.resource.count() > 0' with error message 'Es wurden keine Suchergebnisse gefunden'
     And element "ingredient.item" in all bundle resources references resource with ID "${data.medication-read-referenced-ingredient}"
 
-  Scenario: Suche des Medikaments anhand des Rezeptur Codes
-    Then Get FHIR resource at "http://fhirserver/Medication/?ingredient.code=L01DB01" with content type "xml"
+  Scenario: Suche des Medikaments anhand des Rezeptur Codes (Chaining)
+    # Code vom referenzierten medication-read-referenced-ingredient
+    Then Get FHIR resource at "http://fhirserver/Medication/?ingredient.code=V03AB23" with content type "xml"
     And FHIR current response body evaluates the FHIRPath 'entry.resource.count() > 0' with error message 'Es wurden keine Suchergebnisse gefunden'
-    And element "ingredient.item" in all bundle resources references resource with ID "${data.medication-read-referenced-ingredient}"
+    And response bundle contains resource with ID "${data.medication-read-id}" with error message "Das gesuchte Medikament {data.medication-read-id} ist nicht im Responsebundle enthalten"
 
   Scenario: Suche des Medikaments anhand des Rezeptur Codes
     Then Get FHIR resource at "http://fhirserver/Medication/?ingredient-code=L01DB01" with content type "xml"

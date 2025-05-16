@@ -1,5 +1,5 @@
-@basis
-@mandatory
+@Basis
+@Mandatory
 @Procedure-Read
 Feature: Lesen der Ressource Procedure gegen procedure-read (@Procedure-Read)
 

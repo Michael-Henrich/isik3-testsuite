@@ -1,5 +1,5 @@
-@basis
-@mandatory
+@Basis
+@Mandatory
 @Composition-Post
 Feature: POST eines Document-Bundles (@Composition-Post)
 

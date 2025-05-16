@@ -1,5 +1,5 @@
-@basis
-@mandatory
+@Basis
+@Mandatory
 @Practitioner-Search
 Feature: Lesen der Ressource Practitioner (@Practitioner-Search)
 

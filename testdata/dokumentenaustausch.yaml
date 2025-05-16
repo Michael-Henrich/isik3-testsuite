@@ -1,0 +1,4 @@
+documentreference-read-id: DocumentReference-Read-Example
+documentreference-read-patient-id: Patient-Read-Example
+documentreference-read-encounter-id: Encounter-Read-Finished-Example
+documentreference-read-patient-identifier-value: IdentifierValuepatient-read

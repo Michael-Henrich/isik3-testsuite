@@ -1,20 +1,29 @@
-/*
-Copyright 2024 gematik GmbH
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
+/*-
+ * #%L
+ * tiger-integration-isik-stufe-3
+ * %%
+ * Copyright (C) 2025 gematik GmbH
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * *******
+ * 
+ * For additional notes and disclaimer from gematik and in case of changes by gematik find details in the "Readme" file.
+ * #L%
+ */
 package de.gematik.glue;
 
+import ca.uhn.fhir.context.FhirContext;
 import de.gematik.refv.commons.validation.ValidationModule;
 import de.gematik.test.tiger.common.config.TigerGlobalConfiguration;
 import de.gematik.test.tiger.glue.HttpGlueCode;
@@ -30,10 +39,14 @@ import io.restassured.http.Method;
 import java.net.URI;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.hl7.fhir.r4.model.DomainResource;
+import org.hl7.fhir.r4.model.Reference;
 
 @Slf4j
 public class IsikGlue {
 
+  public static final String REGEX_REFERENCE_MATCHES_ID =
+      "%s.reference.replaceMatches('/_history/.+','').matches('\\\\b%s$')";
   private final StaticFhirValidationGlue staticFhirValidationGlue = new StaticFhirValidationGlue();
   private final RBelValidatorGlue rBelValidatorGlue = new RBelValidatorGlue();
   private final FhirPathValidationGlue fhirPathValidationGlue = new FhirPathValidationGlue();
@@ -61,7 +74,9 @@ public class IsikGlue {
     rBelValidatorGlue.findLastRequest();
     rBelValidatorGlue.currentResponseMessageAttributeMatches("$.responseCode", "200");
     rBelValidatorGlue.currentResponseMessageAttributeMatches(
-        "$.header.Content-Type", "application/fhir+" + contentType + ";charset=UTF-8");
+        "$.header.Content-Type", "application/fhir\\+" + contentType + ".*");
+    rBelValidatorGlue.currentResponseMessageAttributeMatches(
+            "$.header.Content-Type", "(?i).*charset=UTF-8");
   }
 
   @And("CapabilityStatement contains operation {string} for resource {string}")
@@ -152,9 +167,7 @@ public class IsikGlue {
   public void elementReferencesResourceWithIDWithErrorMessage(
       String reference, String id, String errorMessage) {
     fhirPathValidationGlue.tgrCurrentResponseBodyEvaluatesTheFhirPath(
-        String.format(
-            "%s.reference.replaceMatches('/_history/.+','').matches('\\\\b%s$')", reference, id),
-        errorMessage);
+        String.format(REGEX_REFERENCE_MATCHES_ID, reference, id), errorMessage);
   }
 
   @And(
@@ -222,5 +235,42 @@ public class IsikGlue {
     staticFhirValidationGlue.tgrCurrentResponseBodyAtIsValidFHIRResourceOfType(
         staticFhirValidationGlue.supportedValidationModule("isik3-medikation"),
         "https://gematik.de/fhir/isik/v3/Medikation/StructureDefinition/ISiKMedikament");
+  }
+
+  @And(
+      "reason for medication is given either by code or by reference to a Condition resource with"
+          + " ID {tigerResolvedString}")
+  public void reasonForMedicationIsGivenEitherByCodeOrByReferenceToAConditionResourceWithID(
+      String conditionId) {
+    fhirPathValidationGlue.tgrCurrentResponseBodyEvaluatesTheFhirPath(
+        String.format(
+            "(reasonCode.coding.where(code.empty().not() and system.empty().not() and"
+                + " display.empty().not()).exists() ) or ("
+                + REGEX_REFERENCE_MATCHES_ID
+                + ")",
+            "reasonReference",
+            conditionId),
+        "Grund der Medikation entspricht nicht dem Erwartungswert");
+
+    validateReferencedConditions();
+  }
+
+  private void validateReferencedConditions() {
+    FhirContext ctx = FhirContext.forR4Cached();
+    var resource =
+        rBelValidatorGlue
+            .getRbelMessageRetriever()
+            .findElementInCurrentResponse("$.body")
+            .getRawStringContent();
+    var reasonReferences =
+        ((DomainResource) ctx.newXmlParser().parseResource(resource))
+            .getChildByName("reasonReference")
+            .getValues();
+    var reasonReference = (Reference) reasonReferences.get(0);
+    getAndValidateResource(
+        String.format("http://fhirserver/%s", reasonReference.getReference()), "json");
+    staticFhirValidationGlue.tgrCurrentResponseBodyAtIsValidFHIRResourceOfType(
+        staticFhirValidationGlue.supportedValidationModule("isik3-basismodul"),
+        "https://gematik.de/fhir/isik/v3/Basismodul/StructureDefinition/ISiKDiagnose");
   }
 }
