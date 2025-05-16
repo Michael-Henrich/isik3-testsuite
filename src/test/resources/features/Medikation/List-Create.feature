@@ -1,5 +1,5 @@
-@medikation
-@mandatory
+@Medikation
+@Mandatory
 @List-Create
 Feature: POST einer Medikationsliste (@List-Create)
 

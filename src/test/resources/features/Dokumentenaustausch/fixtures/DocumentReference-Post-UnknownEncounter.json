@@ -8,7 +8,7 @@
   },
   "masterIdentifier": {
     "system": "urn:ietf:rfc:3986",
-    "value": "urn:oid:1.2.840.113556.1.8000.2554.58783.21864.3474.19410.44358.58254.41281.46340"
+    "value": "urn:oid:1.2.840.113556.1.8000.2554.58783.21864.3474.19410.44358.58254.41281.44444"
   },
   "type": {
     "coding": [
@@ -22,7 +22,7 @@
   "identifier": [
     {
       "system": "urn:uuid:96fdda7c-d067-4183-912e-bf5ee74998a8",
-      "value": "129.6.58.42.11111"
+      "value": "129.6.58.42.44444"
     }
   ],
   "status": "current",
@@ -56,7 +56,7 @@
       "attachment": {
         "contentType": "application/pdf",
         "language": "de",
-        "data": "base64encodedPDFdata",
+        "data": "JVBERi0xLg0KMSAwIG9iajw8L0tpZHNbPDwvUGFyZW50IDEgMCBSL1Jlc291cmNlczw8Pj4vQ29udGVudHMgMiAwIFI+Pl0+PmVuZG9iaiAyIDAgb2JqPDw+PnN0cmVhbQ0KQlQvIDkgVGYoSGVsbG8gV29ybGQpJyBFVA0KZW5kc3RyZWFtDQplbmRvYmogdHJhaWxlcjw8L1Jvb3Q8PC9QYWdlcyAxIDAgUj4+Pj4=",
         "creation": "2022-12-31T23:50:50-05:00"
       }
     }

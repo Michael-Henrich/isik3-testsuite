@@ -1,5 +1,5 @@
-@basis
-@mandatory
+@Basis
+@Mandatory
 @Condition-Search
 Feature: Testen von Suchparametern gegen condition-read-active (@Condition-Search)
 

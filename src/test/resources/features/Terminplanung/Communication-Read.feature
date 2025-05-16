@@ -1,5 +1,5 @@
-@terminplanung
-@optional
+@Terminplanung
+@Optional
 @Communication-Read
 Feature: Lesen der Ressource Communication (@Communication-Read)
 

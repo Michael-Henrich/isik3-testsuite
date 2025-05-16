@@ -1,5 +1,5 @@
-@basis
-@mandatory
+@Basis
+@Mandatory
 @Patient-Read-Extended
 Feature: Lesen der Ressource Patient (@Patient-Read-Extended)
 

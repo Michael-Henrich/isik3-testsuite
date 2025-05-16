@@ -1,5 +1,5 @@
-@basis
-@mandatory
+@Basis
+@Mandatory
 @Encounter-Read-In-Progress
 Feature: Lesen der Ressource Encounter (@Encounter-Read-In-Progress)
 

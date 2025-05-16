@@ -1,5 +1,5 @@
-@medikation
-@mandatory
+@Medikation
+@Mandatory
 @MedicationStatement-Read-Rate
 Feature: Lesen der Ressource MedicationStatement (Rate) (@MedicationStatement-Read-Rate)
 

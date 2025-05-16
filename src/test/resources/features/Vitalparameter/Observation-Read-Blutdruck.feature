@@ -1,5 +1,5 @@
-@vitalparameter
-@mandatory
+@Vitalparameter
+@Mandatory
 @Observation-Read-Blutdruck
 Feature: Lesen der Ressource Observation (@Observation-Read-Blutdruck)
 

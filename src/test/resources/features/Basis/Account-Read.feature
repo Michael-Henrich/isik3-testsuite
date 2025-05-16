@@ -1,5 +1,5 @@
-@basis
-@mandatory
+@Basis
+@Mandatory
 @Account-Read
 Feature: Lesen der Ressource Account (@Account-Read)
 

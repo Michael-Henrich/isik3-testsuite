@@ -1,9 +1,10 @@
-@basis
-@optional
+@Basis
+@Optional
 @Encounter-Search-Optional
 Feature: Testen von Suchparametern gegen encounter-read-in-progress (@Encounter-Search-Optional)
 
   @vorbedingung
+  @Optional
   Scenario: Vorbedingung
     Given Testbeschreibung: "Das zu testende System MUSS die zuvor angelegte Ressource bei einer Suche anhand des Parameters finden und in den Suchergebnissen zurückgeben (SEARCH)."
     Given Mit den Vorbedingungen:
@@ -11,6 +12,7 @@ Feature: Testen von Suchparametern gegen encounter-read-in-progress (@Encounter-
       - Der Testfall Encounter-Read-In-Progress muss zuvor erfolgreich mit den optionalen Feldern ausgeführt worden sein.
     """
 
+  @Optional
   Scenario: Read und Validierung des CapabilityStatements
     When Get FHIR resource at "http://fhirserver/metadata" with content type "json"
 
@@ -22,6 +24,7 @@ Feature: Testen von Suchparametern gegen encounter-read-in-progress (@Encounter-
       | location         | reference       |
       | service-provider | reference       |
 
+  @Optional
   Scenario: Suche dem Encounter anhand des Ortes
     Then Get FHIR resource at "http://fhirserver/Encounter/?location=Location/${data.encounter-read-in-progress-location}" with content type "xml"
     And FHIR current response body evaluates the FHIRPath 'entry.resource.count() > 0' with error message 'Es wurden keine Suchergebnisse gefunden'
@@ -29,6 +32,7 @@ Feature: Testen von Suchparametern gegen encounter-read-in-progress (@Encounter-
     And FHIR current response body is a valid CORE resource and conforms to profile "https://hl7.org/fhir/StructureDefinition/Bundle"
     And Check if current response of resource "Encounter" is valid isik3-basismodul resource and conforms to profile "https://gematik.de/fhir/isik/v3/Basismodul/StructureDefinition/ISiKKontaktGesundheitseinrichtung"
 
+  @Optional
   Scenario: Suche des Encounters anhand des Versorgers
     Then Get FHIR resource at "http://fhirserver/Encounter/?service-provider=${data.encounter-read-in-progress-service-provider}" with content type "json"
     And FHIR current response body evaluates the FHIRPath 'entry.resource.count() > 0' with error message 'Es wurden keine Suchergebnisse gefunden'

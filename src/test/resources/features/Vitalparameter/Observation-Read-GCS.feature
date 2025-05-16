@@ -1,5 +1,5 @@
-@vitalparameter
-@optional
+@Vitalparameter
+@Optional
 @Observation-Read-GCS
 Feature: Lesen der Ressource Observation (@Observation-Read-GCS)
 

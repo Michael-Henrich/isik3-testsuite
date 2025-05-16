@@ -1,6 +1,6 @@
-@dokumentenaustausch
-@terminplanung
-@optional
+@Dokumentenaustausch
+@Terminplanung
+@Optional
 @Binary-Read-Raw
 Feature: Lesen der Ressource Binary im nativen Format (@Binary-Read-Raw)
 

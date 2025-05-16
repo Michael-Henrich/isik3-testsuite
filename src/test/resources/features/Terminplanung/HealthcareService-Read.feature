@@ -1,5 +1,5 @@
-@terminplanung
-@mandatory
+@Terminplanung
+@Mandatory
 @HealthcareService-Read
 Feature: Lesen der Ressource HealthcareService (@HealthcareService-Read)
 
@@ -28,6 +28,6 @@ Feature: Lesen der Ressource HealthcareService (@HealthcareService-Read)
     And FHIR current response body is a valid isik3-terminplanung resource and conforms to profile "https://gematik.de/fhir/isik/v3/Terminplanung/StructureDefinition/ISiKMedizinischeBehandlungseinheit"
     And TGR current response with attribute "$..active.value" matches "true"
     And FHIR current response body evaluates the FHIRPath "type.where(coding.where(code = '${data.healthcareservice-read-servicetype-code}' and system = '${data.healthcareservice-read-servicetype-system}').exists()).exists()" with error message 'Der Typ entspricht nicht dem Erwartungswert'
-    And FHIR current response body evaluates the FHIRPath "specialty.where(coding.where(code = '142' and system = 'urn:oid:1.2.276.0.76.5.114').exists()).exists()" with error message 'Die Fachrichtung entspricht nicht dem Erwartungswert'
+    And FHIR current response body evaluates the FHIRPath "specialty.coding.where((code = '142' and system ='urn:oid:1.2.276.0.76.5.114' ) or (code = 'NEUR' and system ='http://ihe-d.de/CodeSystems/AerztlicheFachrichtungen' )).exists()" with error message 'Die Fachrichtung entspricht nicht dem Erwartungswert'
     And TGR current response with attribute "$..name.value" matches "Allgemeine Beratungsstelle der Fachabteilung Neurologie"
     

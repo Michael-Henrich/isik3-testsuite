@@ -1,5 +1,5 @@
-@terminplanung
-@mandatory
+@Terminplanung
+@Mandatory
 @Slot-Read
 Feature: Lesen der Ressource Slot (@Slot-Read)
 

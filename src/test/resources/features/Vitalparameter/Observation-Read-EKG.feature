@@ -1,5 +1,5 @@
-@vitalparameter
-@optional
+@Vitalparameter
+@Optional
 @Observation-Read-EKG
 Feature: Lesen der Ressource Observation (@Observation-Read-EKG)
 

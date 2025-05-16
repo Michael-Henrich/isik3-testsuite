@@ -1,5 +1,5 @@
-@medikation
-@mandatory
+@Medikation
+@Mandatory
 @MedicationAdministration-Create
 Feature: POST einer Medikationsverabreichung (@MedicationAdministration-Create)
 

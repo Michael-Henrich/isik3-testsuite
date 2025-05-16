@@ -1,5 +1,5 @@
-@basis
-@mandatory
+@Basis
+@Mandatory
 @Account-Search
 Feature: Testen von Suchparametern gegen die Account Ressource (@Account-Search)
 

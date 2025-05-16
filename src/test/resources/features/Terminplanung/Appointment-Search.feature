@@ -1,5 +1,5 @@
-@terminplanung
-@mandatory
+@Terminplanung
+@Mandatory
 @Appointment-Search
 Feature: Testen von Suchparametern gegen die Appointment Ressource (@Appointment-Search)
 
@@ -41,31 +41,31 @@ Feature: Testen von Suchparametern gegen die Appointment Ressource (@Appointment
 
   Scenario: Suche nach dem Termin anhand des Status
     Then Get FHIR resource at "http://fhirserver/Appointment/?status=cancelled" with content type "json"
-    And FHIR current response body evaluates the FHIRPath 'entry.resource.count() > 0' with error message 'Es wurden keine Suchergebnisse gefunden'
-    And FHIR current response body evaluates the FHIRPath "entry.resource.all(status = 'cancelled')" with error message 'Es gibt Suchergebnisse, diese passen allerdings nicht vollständig zu den Suchkriterien.'
+    And FHIR current response body evaluates the FHIRPath 'entry.resource.ofType(Appointment).count() > 0' with error message 'Es wurden keine Suchergebnisse gefunden'
+    And FHIR current response body evaluates the FHIRPath "entry.resource.ofType(Appointment).all(status = 'cancelled')" with error message 'Es gibt Suchergebnisse, diese passen allerdings nicht vollständig zu den Suchkriterien.'
 
   Scenario: Suche nach dem Termin anhand des Behandlungstyp
     Then Get FHIR resource at "http://fhirserver/Appointment/?service-type=${data.schedule-read-servicetype-code}" with content type "json"
-    And FHIR current response body evaluates the FHIRPath 'entry.resource.count() > 0' with error message 'Es wurden keine Suchergebnisse gefunden'
-    And FHIR current response body evaluates the FHIRPath "entry.resource.all(serviceType.coding.where(code='${data.schedule-read-servicetype-code}' and system='${data.schedule-read-servicetype-system}').exists())" with error message 'Es gibt Suchergebnisse, diese passen allerdings nicht vollständig zu den Suchkriterien.'
+    And FHIR current response body evaluates the FHIRPath 'entry.resource.ofType(Appointment).count() > 0' with error message 'Es wurden keine Suchergebnisse gefunden'
+    And FHIR current response body evaluates the FHIRPath "entry.resource.ofType(Appointment).all(serviceType.coding.where(code='${data.schedule-read-servicetype-code}' and system='${data.schedule-read-servicetype-system}').exists())" with error message 'Es gibt Suchergebnisse, diese passen allerdings nicht vollständig zu den Suchkriterien.'
 
   Scenario: Suche nach dem Termin anhand der Fachrichtung
-    Then Get FHIR resource at "http://fhirserver/Appointment/?specialty=142" with content type "json"
-    And FHIR current response body evaluates the FHIRPath 'entry.resource.count() > 0' with error message 'Es wurden keine Suchergebnisse gefunden'
-    And FHIR current response body evaluates the FHIRPath "entry.resource.all(specialty.coding.where(code='142' and system='urn:oid:1.2.276.0.76.5.114').exists())" with error message 'Es gibt Suchergebnisse, diese passen allerdings nicht vollständig zu den Suchkriterien.'
+    Then Get FHIR resource at "http://fhirserver/Appointment/?specialty=urn%3Aoid%3A1.2.276.0.76.5.114%7C142%2Chttp%3A%2F%2Fihe-d.de%2FCodeSystems%2FAerztlicheFachrichtungen%7CNEUR" with content type "json"
+    And FHIR current response body evaluates the FHIRPath 'entry.resource.ofType(Appointment).count() > 0' with error message 'Es wurden keine Suchergebnisse gefunden'
+    And FHIR current response body evaluates the FHIRPath "entry.resource.ofType(Appointment).all(specialty.coding.where((code = '142' and system ='urn:oid:1.2.276.0.76.5.114' ) or(code = 'NEUR' and system ='http://ihe-d.de/CodeSystems/AerztlicheFachrichtungen' )).exists())" with error message 'Es gibt Suchergebnisse, diese passen allerdings nicht vollständig zu den Suchkriterien.'
 
   Scenario: Suche nach dem Termin anhand des Datums
     Then Get FHIR resource at "http://fhirserver/Appointment/?date=${data.slot-read-start}" with content type "xml"
-    And FHIR current response body evaluates the FHIRPath 'entry.resource.count() > 0' with error message 'Es wurden keine Suchergebnisse gefunden'
+    And FHIR current response body evaluates the FHIRPath 'entry.resource.ofType(Appointment).count() > 0' with error message 'Es wurden keine Suchergebnisse gefunden'
     # The OR expression enables configuration of both full and partial date time values with different precision, e.g. slot-read-start: 2024-01-01, 2024-01-01T13:00:00, 2024-01-01T13:00:00.000, 2024-01-01T13:00:00+01:00
-    And FHIR current response body evaluates the FHIRPath "entry.resource.all(start.toString().contains('${data.slot-read-start}') or start ~ @${data.slot-read-start})" with error message 'Es gibt Suchergebnisse, diese passen allerdings nicht vollständig zu den Suchkriterien.'
+    And FHIR current response body evaluates the FHIRPath "entry.resource.ofType(Appointment).all(start.toString().contains('${data.slot-read-start}') or start ~ @${data.slot-read-start})" with error message 'Es gibt Suchergebnisse, diese passen allerdings nicht vollständig zu den Suchkriterien.'
 
   Scenario: Suche nach dem Termin anhand des Terminblocks
     Then Get FHIR resource at "http://fhirserver/Appointment/?slot=${data.slot-read-id}" with content type "xml"
-    And FHIR current response body evaluates the FHIRPath 'entry.resource.count() > 0' with error message 'Es wurden keine Suchergebnisse gefunden'
-    And FHIR current response body evaluates the FHIRPath "entry.resource.all(slot.where(reference.replaceMatches('/_history/.+','').matches('\\b${data.slot-read-id}$')).exists())" with error message 'Es gibt Suchergebnisse, diese passen allerdings nicht vollständig zu den Suchkriterien.'
+    And FHIR current response body evaluates the FHIRPath 'entry.resource.ofType(Appointment).count() > 0' with error message 'Es wurden keine Suchergebnisse gefunden'
+    And FHIR current response body evaluates the FHIRPath "entry.resource.ofType(Appointment).all(slot.where(reference.replaceMatches('/_history/.+','').matches('\\b${data.slot-read-id}$')).exists())" with error message 'Es gibt Suchergebnisse, diese passen allerdings nicht vollständig zu den Suchkriterien.'
 
   Scenario: Suche nach dem Termin anhand des Akteurs
     Then Get FHIR resource at "http://fhirserver/Appointment/?actor=Patient/${data.terminplanung-patient-id}" with content type "json"
-    And FHIR current response body evaluates the FHIRPath 'entry.resource.count() > 0' with error message 'Es wurden keine Suchergebnisse gefunden'
-    And FHIR current response body evaluates the FHIRPath "entry.resource.all(participant.where(actor.where(reference.replaceMatches('/_history/.+','').matches('\\b${data.terminplanung-patient-id}$') and display.exists()).exists()).exists())" with error message 'Es gibt Suchergebnisse, diese passen allerdings nicht vollständig zu den Suchkriterien.'
+    And FHIR current response body evaluates the FHIRPath 'entry.resource.ofType(Appointment).count() > 0' with error message 'Es wurden keine Suchergebnisse gefunden'
+    And FHIR current response body evaluates the FHIRPath "entry.resource.ofType(Appointment).all(participant.where(actor.where(reference.replaceMatches('/_history/.+','').matches('\\b${data.terminplanung-patient-id}$') and display.exists()).exists()).exists())" with error message 'Es gibt Suchergebnisse, diese passen allerdings nicht vollständig zu den Suchkriterien.'

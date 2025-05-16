@@ -8,7 +8,7 @@
   },
   "masterIdentifier": {
     "system": "urn:ietf:rfc:3986",
-    "value": "urn:oid:1.2.840.113556.1.8000.2554.58783.21864.3474.19410.44358.58254.41281.46340"
+    "value": "urn:oid:1.2.840.113556.1.8000.2554.58783.21864.3474.19410.44358.58254.41281.11111"
   },
   "type": {
     "coding": [
@@ -30,7 +30,7 @@
   "subject": {
     "reference": "Patient/${data.documentreference-read-patient-id}"
   },
-  "description": "Molekularpathologiebefund vom 31.12.21",
+  "description": "Molekularpathologiebefund vom 31.12.22",
   "securityLabel": [
     {
       "coding": [
@@ -56,7 +56,7 @@
       "attachment": {
         "contentType": "application/pdf",
         "language": "de",
-        "data": "base64encodedPDFdata",
+        "data": "JVBERi0xLg0KMSAwIG9iajw8L0tpZHNbPDwvUGFyZW50IDEgMCBSL1Jlc291cmNlczw8Pj4vQ29udGVudHMgMiAwIFI+Pl0+PmVuZG9iaiAyIDAgb2JqPDw+PnN0cmVhbQ0KQlQvIDkgVGYoSGVsbG8gV29ybGQpJyBFVA0KZW5kc3RyZWFtDQplbmRvYmogdHJhaWxlcjw8L1Jvb3Q8PC9QYWdlcyAxIDAgUj4+Pj4=",
         "creation": "2022-12-31T23:50:50-05:00"
       }
     }

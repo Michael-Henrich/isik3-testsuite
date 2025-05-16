@@ -1,5 +1,5 @@
-@dokumentenaustausch
-@mandatory
+@Dokumentenaustausch
+@Mandatory
 @DocumentReference-Search-Server
 Feature: Testen von Suchparametern gegen die DocumentReference Ressource (@DocumentReference-Search-Server)
 

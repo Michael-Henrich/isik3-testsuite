@@ -1,5 +1,5 @@
-@medikation
-@mandatory
+@Medikation
+@Mandatory
 @MedicationRequest-Create
 Feature: POST einer Medikationsverordnung (@MedicationRequest-Create)
 

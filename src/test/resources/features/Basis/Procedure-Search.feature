@@ -1,5 +1,5 @@
-@basis
-@mandatory
+@Basis
+@Mandatory
 @Procedure-Search
 Feature: Testen von Suchparametern gegen procedure-read (@Procedure-Search)
 

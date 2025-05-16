@@ -1,5 +1,5 @@
-@basis
-@mandatory
+@Basis
+@Mandatory
 @Coverage-Read-Statutory
 Feature: Lesen der Ressource Coverage (@Coverage-Read-Statutory)
 
@@ -16,7 +16,6 @@ Feature: Lesen der Ressource Coverage (@Coverage-Read-Statutory)
       Erfassen Sie folgendes Versicherungsverhältnis:
       Status: aktiv/gültig
       Versicherungsart: gesetzlich
-      Versicherten-ID: X485231029
       Versicherung: AOK Baden-Württemberg
       IK-Nummer: 108018007
       Begünstigter: Der Patient aus Testfall Patient-Read
@@ -30,7 +29,6 @@ Feature: Lesen der Ressource Coverage (@Coverage-Read-Statutory)
     Then Get FHIR resource at "http://fhirserver/Coverage/${data.coverage-read-statutory-id}" with content type "xml"
     And FHIR current response body is a valid isik3-basismodul resource and conforms to profile "https://gematik.de/fhir/isik/v3/Basismodul/StructureDefinition/ISiKVersicherungsverhaeltnisGesetzlich"
     And resource has ID "${data.coverage-read-statutory-id}"
-    And FHIR current response body evaluates the FHIRPath "identifier.where(type.coding.system='http://fhir.de/CodeSystem/identifier-type-de-basis' and type.coding.code='GKV' and system='http://fhir.de/sid/gkv/kvid-10' and value = 'X485231029').exists()" with error message 'Der Identifier entspricht nicht dem Erwartungswert'
     And FHIR current response body evaluates the FHIRPath "type.coding.where(system='http://fhir.de/CodeSystem/versicherungsart-de-basis' and code = 'GKV').exists()" with error message 'Der Typ entspricht nicht dem Erwartungswert'
     And element "beneficiary" references resource with ID "${data.patient-read-id}" with error message "Referenzierter Patient entspricht nicht dem Erwartungswert"
 

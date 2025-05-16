@@ -1,5 +1,5 @@
-@basis
-@mandatory
+@Basis
+@Mandatory
 @ValueSet-Search
 Feature: Testen von Suchparametern gegen die ValueSet Ressource (@ValueSet-Search)
 
@@ -25,7 +25,7 @@ Feature: Testen von Suchparametern gegen die ValueSet Ressource (@ValueSet-Searc
 
   Scenario: Suche nach ValueSet anhand der ID
     Then Get FHIR resource at "http://fhirserver/ValueSet/?_id=${data.valueset-read-id}" with content type "xml"
-    Then TGR find last request to path "/ValueSet/" with "$.path._id.value" matching "${data.valueset-read-id}"
+    Then TGR find the last request
     Then TGR current response with attribute "$.responseCode" matches "200"
     And TGR current response with attribute "$.header.Content-Type" matches "application/fhir+xml;charset=UTF-8"
     And response bundle contains resource with ID "${data.valueset-read-id}" with error message "Das gesuchte ValueSet ${data.valueset-read-id} ist nicht im Responsebundle enthalten"

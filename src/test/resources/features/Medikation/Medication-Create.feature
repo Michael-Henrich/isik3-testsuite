@@ -1,5 +1,5 @@
-@medikation
-@mandatory
+@Medikation
+@Mandatory
 @Medication-Create
 Feature: POST einer Medication-Ressource (@Medication-Create)
 

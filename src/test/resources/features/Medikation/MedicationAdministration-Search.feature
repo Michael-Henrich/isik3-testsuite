@@ -1,5 +1,5 @@
-@medikation
-@mandatory
+@Medikation
+@Mandatory
 @MedicationAdministration-Search
 Feature: Testen von Suchparametern gegen die MedicationAdministration Ressource (@MedicationAdministration-Search)
 

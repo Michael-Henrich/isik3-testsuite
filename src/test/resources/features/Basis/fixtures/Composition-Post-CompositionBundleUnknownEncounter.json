@@ -1,6 +1,11 @@
 {
   "resourceType": "Bundle",
   "id": "CompositionBundleUnknownEncounter",
+  "meta": {
+    "profile": [
+      "https://gematik.de/fhir/isik/v3/Basismodul/StructureDefinition/ISiKBerichtBundle"
+    ]
+  },
   "entry": [
     {
       "resource": {
@@ -272,6 +277,39 @@
         }
       },
       "fullUrl": "urn:uuid:e25e3869-a517-425b-acfc-19e6f4ee17a8"
+    },
+    {
+      "resource": {
+        "resourceType": "Practitioner",
+        "id": "Practitioner-Composition-Test-Example",
+        "identifier": [
+          {
+            "system": "http://www.acme.org/practitioners",
+            "value": "23"
+          }
+        ],
+        "active": true,
+        "name": [
+          {
+            "text": "Harold Hippocrates, MD",
+            "family": "Hippocrates"
+          }
+        ],
+        "address": [
+          {
+            "type": "both",
+            "line": [
+              "Musterweg 13"
+            ],
+            "city": "Berlin",
+            "postalCode": "11111",
+            "country": "DE"
+          }
+        ],
+        "gender": "male",
+        "birthDate": "1979-04-29"
+      },
+      "fullUrl": "urn:uuid:2cf8991f-0b6b-42b8-86c0-2d8cf2dc852f"
     }
   ],
   "type": "document",

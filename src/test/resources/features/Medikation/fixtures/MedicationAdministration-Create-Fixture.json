@@ -13,12 +13,6 @@
       "unit": "Brausetablette",
       "code": "1"
     },
-    "rateQuantity": {
-      "system": "http://unitsofmeasure.org",
-      "value": 1,
-      "code": "1"
-    },
-    "text": "Testtext",
     "site": {
       "coding": [
         {
@@ -48,7 +42,7 @@
   "context": {
     "reference": "Encounter/${data.medication-encounter-id}"
   },
-  "effectiveDateTime": "2021-07-01",
+  "effectiveDateTime": "2021-07-01T12:00:00+01:00",
   "performer": [
     {
       "actor": {

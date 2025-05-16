@@ -1,9 +1,10 @@
-@basis
-@optional
+@Basis
+@Optional
 @Condition-Search-Optional
 Feature: Testen von KANN-Suchparametern gegen condition-read-active (@Condition-Search-Optional)
 
   @vorbedingung
+  @Optional
   Scenario: Vorbedingung
     Given Testbeschreibung: "Das zu testende System MUSS die zuvor angelegte Ressource bei einer Suche anhand des Parameters finden und in den Suchergebnissen zurückgeben (SEARCH)."
     Given Mit den Vorbedingungen:
@@ -17,6 +18,7 @@ Feature: Testen von KANN-Suchparametern gegen condition-read-active (@Condition-
       Rest: Beliebig
     """
 
+  @Optional
   Scenario: Read und Validierung des CapabilityStatements
     Then Get FHIR resource at "http://fhirserver/metadata" with content type "json"
     And FHIR current response body evaluates the FHIRPaths:
@@ -25,6 +27,7 @@ Feature: Testen von KANN-Suchparametern gegen condition-read-active (@Condition-
       rest.where(mode = "server").resource.where(type = "Condition" and searchParam.where(name = "category" and type = "token").exists()).exists()
     """
 
+  @Optional
   Scenario: Suche der Diagnose anhand der Kategorie
     Then Get FHIR resource at "http://fhirserver/Condition/?category=encounter-diagnosis" with content type "xml"
     And FHIR current response body evaluates the FHIRPath 'entry.resource.count() > 0' with error message 'Es wurden keine Suchergebnisse gefunden'

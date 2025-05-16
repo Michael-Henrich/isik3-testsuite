@@ -1,5 +1,5 @@
-@basis
-@mandatory
+@Basis
+@Mandatory
 @Coverage-Search-Statutory
 Feature: Testen von Suchparametern gegen coverage-read-private (@Coverage-Search-Statutory)
 
@@ -18,7 +18,6 @@ Feature: Testen von Suchparametern gegen coverage-read-private (@Coverage-Search
     """
       rest.where(mode = "server").resource.where(type = "Coverage" and interaction.where(code = "search-type").exists()).exists()
       rest.where(mode = "server").resource.where(type = "Coverage" and searchParam.where(name = "_id" and type = "token").exists()).exists()
-      rest.where(mode = "server").resource.where(type = "Coverage" and searchParam.where(name = "identifier" and type = "token").exists()).exists()
       rest.where(mode = "server").resource.where(type = "Coverage" and searchParam.where(name = "status" and type = "token").exists()).exists()
       rest.where(mode = "server").resource.where(type = "Coverage" and searchParam.where(name = "type" and type = "token").exists()).exists()
       rest.where(mode = "server").resource.where(type = "Coverage" and searchParam.where(name = "beneficiary" and type = "reference").exists()).exists()
@@ -33,9 +32,9 @@ Feature: Testen von Suchparametern gegen coverage-read-private (@Coverage-Search
     And Check if current response of resource "Coverage" is valid isik3-basismodul resource and conforms to profile "https://gematik.de/fhir/isik/v3/Basismodul/StructureDefinition/ISiKVersicherungsverhaeltnisGesetzlich"
 
   Scenario: Suche nach der Coverage anhand der Versichertennummer
-    Then Get FHIR resource at "http://fhirserver/Coverage/?identifier=http://fhir.de/sid/gkv/kvid-10%7CX485231029" with content type "json"
+    Then Get FHIR resource at "http://fhirserver/Coverage/?patient.identifier=http://fhir.de/sid/gkv/kvid-10%7CX485231029" with content type "json"
     And FHIR current response body evaluates the FHIRPath 'entry.resource.count() > 0' with error message 'Es wurden keine Suchergebnisse gefunden'
-    And FHIR current response body evaluates the FHIRPath "entry.resource.all(identifier.where(system='http://fhir.de/sid/gkv/kvid-10' and value='X485231029').exists())" with error message 'Es gibt Suchergebnisse, diese passen allerdings nicht vollständig zu den Suchkriterien.'
+    And response bundle contains resource with ID "${data.coverage-read-statutory-id}" with error message "Die gesuchte Diagnose {{coverage-read-statutory-id}} ist nicht im Responsebundle enthalten"
 
   Scenario: Suche nach der Coverage anhand des status
     Then Get FHIR resource at "http://fhirserver/Coverage/?status=active" with content type "xml"

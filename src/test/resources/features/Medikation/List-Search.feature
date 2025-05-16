@@ -1,5 +1,5 @@
-@medikation
-@mandatory
+@Medikation
+@Mandatory
 @List-Search
 Feature: Testen von Suchparametern gegen die Medikationsliste aus List-read (@List-Search)
 

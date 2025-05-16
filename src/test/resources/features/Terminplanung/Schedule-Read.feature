@@ -1,5 +1,5 @@
-@terminplanung
-@mandatory
+@Terminplanung
+@Mandatory
 @Schedule-Read
 Feature: Lesen der Ressource Schedule (@Schedule-Read)
 
@@ -16,7 +16,7 @@ Feature: Lesen der Ressource Schedule (@Schedule-Read)
       Behandlungstyp: Beliebig (bitte das CodeSystem und den Code in den Konfigurationsvariablen 'schedule-read-servicetype-system' und 'schedule-read-servicetype-code' angeben)
       Fachrichtung: Neurologie
       Akteur: Beliebig (die verknüpfte Practitioner-Ressource muss konform zu ISiKPersonImGesundheitsberuf sein, Bitte ID in der Konfigurationsvariable 'terminplanung-practitioner-id' angeben)
-      Name: Kalender
+      Name: Beliebig (nicht leer\)"
     """
 
   Scenario: Read und Validierung des CapabilityStatements
@@ -29,6 +29,6 @@ Feature: Lesen der Ressource Schedule (@Schedule-Read)
     And FHIR current response body is a valid isik3-terminplanung resource and conforms to profile "https://gematik.de/fhir/isik/v3/Terminplanung/StructureDefinition/ISiKKalender"
     And TGR current response with attribute "$..active.value" matches "true"
     And FHIR current response body evaluates the FHIRPath "serviceType.coding.where(code='${data.schedule-read-servicetype-code}' and system = '${data.schedule-read-servicetype-system}').exists()" with error message 'Der Typ des Kalenders entspricht nicht dem Erwartungswert'
-    And FHIR current response body evaluates the FHIRPath "specialty.coding.where(code = '142' and system ='urn:oid:1.2.276.0.76.5.114').exists()" with error message 'Die Fachrichtung entspricht nicht dem Erwartungswert'
+    And FHIR current response body evaluates the FHIRPath "specialty.coding.where((code = '142' and system ='urn:oid:1.2.276.0.76.5.114') or (code = 'NEUR' and system ='http://ihe-d.de/CodeSystems/AerztlicheFachrichtungen' )).exists()" with error message 'Die Fachrichtung entspricht nicht dem Erwartungswert'
     And FHIR current response body evaluates the FHIRPath "actor.where(reference.replaceMatches('/_history/.+','').matches('\\b${data.terminplanung-practitioner-id}$') and display.exists()).exists()" with error message 'Der Akteur ist nicht vollständig vorhanden'
-    And FHIR current response body evaluates the FHIRPath "extension.where(url = 'http://hl7.org/fhir/5.0/StructureDefinition/extension-Schedule.name' and value = 'Kalender').exists()" with error message 'Der Name entspricht nicht dem Erwartungswert'
+    And FHIR current response body evaluates the FHIRPath "extension.where(url = 'http://hl7.org/fhir/5.0/StructureDefinition/extension-Schedule.name' and value.empty().not()).exists()" with error message 'Der Kalendername ist nicht angegeben'

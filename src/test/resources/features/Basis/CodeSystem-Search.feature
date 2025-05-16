@@ -1,5 +1,5 @@
-@basis
-@optional
+@Basis
+@Optional
 @CodeSystem-Search
 Feature: Testen von Suchparametern gegen die CodeSystem Ressource (@CodeSystem-Search)
 

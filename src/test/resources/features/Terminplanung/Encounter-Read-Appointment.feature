@@ -1,5 +1,5 @@
-@terminplanung
-@optional
+@Terminplanung
+@Optional
 @Encounter-Read-Appointment
 Feature: Lesen der Ressource Encounter mit Terminverknüpfung (@Encounter-Read-Appointment)
 

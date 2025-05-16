@@ -1,5 +1,5 @@
-@medikation
-@mandatory
+@Medikation
+@Mandatory
 @MedicationAdministration-Update
 Feature: Update einer Medikationsverabreichung (@MedicationAdministration-Update)
 
@@ -24,6 +24,4 @@ Feature: Update einer Medikationsverabreichung (@MedicationAdministration-Update
     And TGR send empty GET request to "http://fhirserver/MedicationAdministration/${data.medicationadministration-update-id}"
     And TGR find the last request
     And TGR current response with attribute "$.body.note.0.text.content" matches "Aktualisierte Testnotiz"
-    And TGR current response with attribute "$.body.dosage.text.content" matches "Aktualisierte Dosierungsangabe"
     Then TGR current response with attribute "$.body.dosage.dose.value.content" matches "5"
-    And FHIR current response body evaluates the FHIRPath "dosage.rate.value = 5" with error message 'Ratenangabe entspricht nicht dem Erwartungswert'

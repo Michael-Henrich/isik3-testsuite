@@ -19,8 +19,8 @@
           ]
         },
         "status": "proposed",
-        "start": "2024-09-01T13:00:00Z",
-        "end": "2024-09-01T14:00:00Z",
+        "start": "2026-01-01T13:00:00Z",
+        "end": "2026-01-01T14:00:00Z",
         "comment": "Dies ist ein Test Kommentar!",
         "serviceType": [
           {

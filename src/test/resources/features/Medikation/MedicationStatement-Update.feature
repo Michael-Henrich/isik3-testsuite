@@ -1,5 +1,5 @@
-@medikation
-@mandatory
+@Medikation
+@Mandatory
 @MedicationStatement-Update
 Feature: Update einer MedicationStatement-Ressource (@MedicationStatement-Update)
 
