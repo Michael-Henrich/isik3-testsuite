@@ -1,19 +1,19 @@
 schedule-read-servicetype-code: 177
 schedule-read-servicetype-system: http://terminology.hl7.org/CodeSystem/service-type
-appointment-read-id: Appointment-Read-Example
-communication-read-id: Communication-Read-Example
-communication-update-id: Communication-Update-Original-Example
-terminplanung-patient-id: Patient-Read-Example
-terminplanung-practitioner-id: Practitioner-Read-Example
-slot-read-id: Slot-Read-Example
-slot-read-start: "2027-01-01"
-encounter-read-appointment-id: Encounter-Read-Appointment-Example
-encounter-read-appointment-identifier-system: https://test.krankenhaus.de/fhir/sid/fallnr
-encounter-read-appointment-identifier-value: 0123456789
-healthcareservice-read-id: HealthcareService-Read-Example
+appointment-read-id: 715
+communication-read-id:
+communication-update-id:
+terminplanung-patient-id: 100160
+terminplanung-practitioner-id: 10024
+slot-read-id: 2601020900122
+slot-read-start: 2026-01-02T09:00:00
+encounter-read-appointment-id:
+encounter-read-appointment-identifier-system:
+encounter-read-appointment-identifier-value:
+healthcareservice-read-id: 10212
 healthcareservice-read-servicetype-system: http://terminology.hl7.org/CodeSystem/service-type
 healthcareservice-read-servicetype-code: 177
-schedule-read-id: Schedule-Read-Example
+schedule-read-id: 122
 appointment-book-servicetype-system: http://terminology.hl7.org/CodeSystem/service-type
 appointment-book-servicetype-code: 177
-appointment-book-slot-id: Slot-Free-Example
+appointment-book-slot-id: 2601010900122

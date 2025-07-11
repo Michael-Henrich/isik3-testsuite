@@ -2,7 +2,7 @@ servers:
   fhirserver:
     type: externalUrl
     source:
-      - http://localhost:9032
+      - https://localhost/u/iris-fhir/resources/r4/
     #  - http://example.org:9032/some/path/to/endpoint
     # when you use the fhirserver as a docker image
     #  - http://fhirserverImage:9032
@@ -12,8 +12,13 @@ servers:
 tigerProxy: # https://gematik.github.io/app-Tiger/Tiger-User-Manual.html#_configuring_the_local_test_suite_tiger_proxy
   adminPort: 9011
 # Activate and adjust the configuration below if the SUT endpoint contains a URL path, e.g. /some/path/to/endpoint
-#  proxyRoutes:
-#    - from: "http://fhirserver"
+  proxyRoutes:
+    - from: http://fhirserver/
+      to: https://localhost/u/iris-fhir/resources/r4/
+      authentication:
+        # Token will be set automatically when using the ./run-tests.sh
+        bearerToken: "${BEARER_TOKEN}"
+
 #      to: "https://example.org:9032/some/path/to/endpoint"
 # Optional authentication (basic or bearer), cf. https://gematik.github.io/app-Tiger/Tiger-User-Manual.html#authentication
 #      authentication:
@@ -29,9 +34,9 @@ tigerProxy: # https://gematik.github.io/app-Tiger/Tiger-User-Manual.html#_config
 #      - "localhost"
 
 lib:
-  activateWorkflowUi: true
+  activateWorkflowUi: false
   workflowUiPort: 9010
-  trafficVisualization: true
+  trafficVisualization: false
   runTestsOnStart: true
 
 logging:

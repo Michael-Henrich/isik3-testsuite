@@ -1,4 +1,4 @@
-documentreference-read-id: DocumentReference-Read-Example
-documentreference-read-patient-id: Patient-Read-Example
-documentreference-read-encounter-id: Encounter-Read-Finished-Example
-documentreference-read-patient-identifier-value: IdentifierValuepatient-read
+documentreference-read-id: 95e2b28c-6ce2-443a-b384-c0849a2babe2
+documentreference-read-patient-id: 100160
+documentreference-read-encounter-id: FF-5887
+documentreference-read-patient-identifier-value: 1000017
